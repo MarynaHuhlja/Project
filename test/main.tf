@@ -5,21 +5,10 @@ provider "aws" {
 }
 
 module "vpc_dev" {
-  source               = "../modules"
+  source               = "../modules/vpc"
   env                  = var.env
   vpc_cidr             = var.vpc_cidr
   public_subnet_cidrs  = var.public_subnet_cidrs
   private_subnet_cidrs = var.private_subnet_cidrs
 }
 
-########################
-
-output "dev_public_subnet_ids" {
-  value = module.vpc_dev.public_subnet_ids
-
-}
-
-output "dev_private_subnet_ids" {
-  value = module.vpc_dev.private_subnet_ids
-
-}
