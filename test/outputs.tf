@@ -1,18 +1,17 @@
-
-output "test_vpc_id" {
-  value = aws_vpc.main.id
+output "vpc_id" {
+  value = module.vpc_test.vpc_id
 }
 
-output "test_vpc_cidr" {
-  value = aws_vpc.main.cidr_block
-
-}
-
-output "test_public_subnet_ids" {
-  value = aws_subnet.public_subnets[*].id
+output "vpc_cidr" {
+  value = module.vpc_test.vpc_cidr
 
 }
 
-output "test_private_subnet_ids" {
-  value = aws_subnet.private_subnets[*].id
+output "public_subnet_ids" {
+  value = module.vpc_test.public_subnet_ids
+
+}
+
+output "private_subnet_ids" {
+  value = module.vpc_test.private_subnet_ids
 }
