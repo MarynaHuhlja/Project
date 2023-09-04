@@ -4,7 +4,7 @@ provider "aws" {
   shared_credentials_files = ["$HOME/.aws/credentials"]
 }
 
-module "vpc_dev" {
+module "vpc_test" {
   source               = "../modules/vpc"
   env                  = var.env
   vpc_cidr             = var.vpc_cidr
