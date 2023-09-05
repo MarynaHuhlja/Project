@@ -1,4 +1,4 @@
-## 1 vpc +1 Internat Gateway + 2 public subnets + 2 private subnets + 2 NAT Gateway + 
+## #1 vpc +1 Internat Gateway + 2 public subnets + 2 private subnets + 2 NAT Gateway + 
 provider "aws" {
   shared_config_files      = ["$HOME/.aws/config"]
   shared_credentials_files = ["$HOME/.aws/credentials"]
