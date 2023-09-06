@@ -1,5 +1,5 @@
 module "my_ecr" {
-  source           = "./my-ecr-module"
+  source           = "../../modules/ecr"
   repository_name  = "my-container-repo"
   lifecycle_policy = jsonencode({
     rules = [
