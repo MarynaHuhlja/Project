@@ -4,11 +4,12 @@ provider "aws" {
   shared_credentials_files = ["$HOME/.aws/credentials"]
 }
 
-module "vpc_test" {
-  source               = "../modules/vpc"
-  env                  = var.env
-  vpc_cidr             = var.vpc_cidr
-  public_subnet_cidrs  = var.public_subnet_cidrs
-  private_subnet_cidrs = var.private_subnet_cidrs
-}
+
+#module "vpc_test" {
+#  source               = "../modules/vpc"
+#  env                  = var.env
+#  vpc_cidr             = var.vpc_cidr
+#  public_subnet_cidrs  = var.public_subnet_cidrs
+#  private_subnet_cidrs = var.private_subnet_cidrs
+# }
 
