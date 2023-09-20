@@ -23,7 +23,7 @@ data "aws_availability_zones" "available" {}
 locals {
   region = "eu-central-1"
   name   = "test-${basename(path.cwd)}"
-  azs    = slice(data.aws_availability_zones.available.names, 0, 1)
+  azs    = slice(data.aws_availability_zones.available.names, 0, 2)
 
   container_name = "nginx"
   container_port = 80
@@ -41,7 +41,7 @@ locals {
 
 module "ecs_cluster" {
   source  = "terraform-aws-modules/ecs/aws//modules/cluster"
-  version = "5.2.1"
+  version = "5.2.2"
 
   cluster_name = local.name
 
@@ -49,12 +49,12 @@ module "ecs_cluster" {
   default_capacity_provider_use_fargate = false
   autoscaling_capacity_providers = {
     # On-demand instances
-    ex-1 = {
-      auto_scaling_group_arn         = module.autoscaling["ex-1"].autoscaling_group_arn
+    exh-1 = {
+      auto_scaling_group_arn         = module.autoscaling["exh-1"].autoscaling_group_arn
       managed_termination_protection = "ENABLED"
 
       managed_scaling = {
-        maximum_scaling_step_size = 5
+        maximum_scaling_step_size = 2
         minimum_scaling_step_size = 1
         status                    = "ENABLED"
         target_capacity           = 60
@@ -76,7 +76,7 @@ module "ecs_cluster" {
 
 module "ecs_service" {
   source  = "terraform-aws-modules/ecs/aws//modules/service"
-  version = "4.2.0-rc.9"
+  version = "5.2.2"
 
   # Service
   name        = local.name
@@ -88,10 +88,10 @@ module "ecs_service" {
   requires_compatibilities = ["EC2"]
   capacity_provider_strategy = {
     # On-demand instances
-    ex-1 = {
-      capacity_provider = module.ecs_cluster.autoscaling_capacity_providers["ex-1"].name
-      weight            = 1
-      base              = 1
+    exh-1 = {
+      capacity_provider = module.ecs_cluster.autoscaling_capacity_providers["exh-1"].name
+      weight            = 2
+      base              = 2
     }
   }
 
@@ -115,8 +115,8 @@ module "ecs_service" {
 
       mount_points = [
         {
-          sourceVolume  = "dev-vol",
-          containerPath = "/var/www/dev-vol"
+          sourceVolume  = "my-vol",
+          containerPath = "/var/www/my-vol"
         }
       ]
 
@@ -214,7 +214,7 @@ module "autoscaling" {
 
   for_each = {
     # On-demand instances
-    ex-1 = {
+    exh-1 = {
       instance_type              = "t2.micro"
       use_mixed_instances_policy = false
       mixed_instances_policy     = {}
